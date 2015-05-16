@@ -102,6 +102,6 @@ struct drmmode_interface rockchip_interface = {
 	CURSORPAD             /* cursor padding */,
 	HWCURSOR_API_STANDARD    /* cursor_api */,
 NULL/*	init_plane_for_cursor*/ /* init_plane_for_cursor */,
-	0                     /* vblank_query_supported */,
+	1                     /* vblank_query_supported */,
 	create_custom_gem     /* create_custom_gem */,
 };
