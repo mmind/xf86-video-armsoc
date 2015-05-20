@@ -247,8 +247,8 @@ static Bool create_buffer(DrawablePtr pDraw, struct ARMSOCDRI2BufferRec *buf)
 #if DRI2INFOREC_VERSION >= 6
 		else if (FALSE == DRI2SwapLimit(pDraw, pARMSOC->swap_chain_size)) {
 			WARNING_MSG(
-				"Failed to set DRI2SwapLimit(%x,%d)",
-				(unsigned int)pDraw, pARMSOC->swap_chain_size);
+				"Failed to set DRI2SwapLimit(%p,%d)",
+				pDraw, pARMSOC->swap_chain_size);
 		}
 #endif /* DRI2INFOREC_VERSION >= 6 */
 	}
@@ -787,13 +787,6 @@ ARMSOCDRI2ScheduleSwap(ClientPtr client, DrawablePtr pDraw,
 	cmd->func = func;
 	cmd->data = data;
 
-	region.extents.x1 = region.extents.y1 = 0;
-	region.extents.x2 = pDstPixmap->drawable.width;
-	region.extents.y2 = pDstPixmap->drawable.height;
-	region.data = NULL;
-	DamageRegionAppend(&pDstPixmap->drawable, &region);
-	DamageRegionProcessPending(&pDstPixmap->drawable);
-
 	/* obtain extra ref on DRI buffers to avoid them going
 	 * away while we await the page flip event.
 	 */
@@ -929,6 +922,13 @@ ARMSOCDRI2ScheduleSwap(ClientPtr client, DrawablePtr pDraw,
 		exchangebufs(pDraw, pSrcBuffer, pDstBuffer);
 		if (pSrcBuffer->attachment == DRI2BufferBackLeft)
 			nextBuffer(pDraw, ARMSOCBUF(pSrcBuffer));
+
+		region.extents.x1 = region.extents.y1 = 0;
+		region.extents.x2 = pDstPixmap->drawable.width;
+		region.extents.y2 = pDstPixmap->drawable.height;
+		region.data = NULL;
+		DamageRegionAppend(&pDstPixmap->drawable, &region);
+		DamageRegionProcessPending(&pDstPixmap->drawable);
 
 		cmd->type = DRI2_EXCHANGE_COMPLETE;
 		ARMSOCDRI2SwapComplete(cmd);
