@@ -1,0 +1,49 @@
+Source: xf86-video-armsoc
+Section: x11
+Priority: optional
+Maintainer: Heiko Stuebner <mmind@debian.org>
+Build-Depends:
+ debhelper (>= 8),
+ dh-autoreconf,
+ quilt,
+ pkg-config,
+ xserver-xorg-dev (>= 2:1.9.4),
+ x11proto-core-dev,
+ x11proto-fonts-dev,
+ x11proto-randr-dev,
+ x11proto-render-dev,
+ x11proto-video-dev,
+ x11proto-xf86dri-dev,
+ x11proto-xext-dev,
+ libdrm-dev (>= 2.2),
+ libxext-dev,
+ libudev-dev,
+ xutils-dev (>= 1:7.5+1),
+Standards-Version: 3.9.6
+
+Package: xserver-xorg-video-armsoc
+Architecture: amd64 armel armhf
+Depends:
+ ${shlibs:Depends},
+ ${misc:Depends},
+ ${xviddriver:Depends},
+Provides:
+ ${xviddriver:Provides}
+Description: X.Org X server -- ARMSOC driver
+ This package provides a generic driver for some ARM-SoCs.
+ .
+ It can be combined for example with a mali userspace driver
+ to achieve accelerated 3d.
+
+Package: xserver-xorg-video-armsoc-dbg
+Architecture: amd64 armel armhf
+Depends:
+ xserver-xorg-video-modesetting (= ${binary:Version}),
+ ${shlibs:Depends},
+ ${misc:Depends}
+Section: debug
+Priority: extra
+Description: X.Org X server -- ARMSOC driver (debug symbols)
+ This driver provides support for the generic armsoc driver.
+ .
+ This package provides debugging symbols for this Xorg X driver.

@@ -1,0 +1,5 @@
+xf86-video-armsoc (1.3.0+rockchip20150528-1) UNRELEASED; urgency=low
+
+  * New X DDX for ARM/mali including support for Rockchip RK3288 SoCs.
+
+ -- Heiko Stuebner <mmind@debian.org>  Thu, 28 May 2015 14:50:18 +0200
