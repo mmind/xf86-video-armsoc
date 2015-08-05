@@ -63,7 +63,7 @@ struct drm_rockchip_gem_create {
  * Padding added down each side of cursor image. This is a workaround for a bug
  * causing corruption when the cursor reaches the screen edges.
  */
-#define CURSORPAD (16)
+#define CURSORPAD (0)
 
 #define ALIGN(val, align)	(((val) + (align) - 1) & ~((align) - 1))
 
@@ -94,14 +94,14 @@ static int create_custom_gem(int fd, struct armsoc_create_gem *create_gem)
 }
 
 struct drmmode_interface rockchip_interface = {
-	"rockchip"              /* name of drm driver */,
+	"rockchip"            /* name of drm driver */,
 	1                     /* use_page_flip_events */,
 	1                     /* use_early_display */,
 	CURSORW               /* cursor width */,
 	CURSORH               /* cursor_height */,
 	CURSORPAD             /* cursor padding */,
-	HWCURSOR_API_STANDARD    /* cursor_api */,
-NULL/*	init_plane_for_cursor*/ /* init_plane_for_cursor */,
+	HWCURSOR_API_PLANE    /* cursor_api */,
+	NULL                  /* init_plane_for_cursor */,
 	1                     /* vblank_query_supported */,
 	create_custom_gem     /* create_custom_gem */,
 };
